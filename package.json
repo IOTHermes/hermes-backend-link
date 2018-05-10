@@ -1,13 +1,13 @@
 {
-  "name": "hermes-client",
-  "version": "1.0.0",
-  "description": "",
-  "main": "example.js",
+  "name": "hermes-backend-link",
+  "version": "0.1.0",
+  "description": "Client link for the Hermes backend",
+  "main": "lib/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@feathersjs/authentication-client": "^1.0.2",
     "@feathersjs/feathers": "^3.1.5",
