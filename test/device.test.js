@@ -15,25 +15,25 @@ const mock_cloud_device = {
   updatedAt: "2018-05-08T20:44:53.019Z",
   __v: 0,
   _include: [
-      "type"
+    "type"
   ],
   type: {
-      _id: "5af1ffd8d4bedc1378325f99",
-      actions: [],
-      name: "camera",
-      type: "sensor",
-      properties: {
-          base64: {
-              type: "string",
-              required: true
-          },
-          name: {
-              type: "string"
-          }
+    _id: "5af1ffd8d4bedc1378325f99",
+    actions: [],
+    name: "camera",
+    type: "sensor",
+    properties: {
+      base64: {
+        type: "string",
+        required: true
       },
-      createdAt: "2018-05-08T19:51:52.415Z",
-      updatedAt: "2018-05-10T12:40:26.064Z",
-      __v: 0
+      name: {
+        type: "string"
+      }
+    },
+    createdAt: "2018-05-08T19:51:52.415Z",
+    updatedAt: "2018-05-10T12:40:26.064Z",
+    __v: 0
   }
 }
 
@@ -47,8 +47,8 @@ const mock_feathers = {
             _id: "5af9c1a602db4e1917409bf2",
             deviceId: data.deviceId,
             log: {
-                name: data.log.name,
-                base64: data.log.base64
+              name: data.log.name,
+              base64: data.log.base64
             },
             createdAt: "2018-05-14T17:04:38.065Z",
             updatedAt: "2018-05-14T17:04:38.065Z",
@@ -155,16 +155,13 @@ describe('Device Unit Test', () => {
     .catch(done);
   });
 
-  it('should remove a log from the cloud device', done => {
-    device.removeLog('5af9c1a602db4e1917409bf2')
-    .then(removed => {
-      expect(removed).to.not.equal(undefined);
-      expect(removed._id.toString()).to.equal('5af9c1a602db4e1917409bf2');
-      expect(removed.deviceId).to.equal('5af20c454494a020724802ff');
-      expect(removed.log.name).to.equal('test-log-name');
-      expect(removed.log.base64).to.equal('test-log-base64');
+  it('should throw not implemented error when removing a log from the cloud device', done => {
+    try {
+      device.removeLog('5af9c1a602db4e1917409bf2');
+    } catch(err) {
+      expect(err).to.not.equal(undefined);
+      expect(err.code).to.equal(501);
       done();
-    })
-    .catch(done);
+    };
   });
 });
