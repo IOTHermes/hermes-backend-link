@@ -16,25 +16,7 @@ const mock_cloud_device = {
   __v: 0,
   _include: [
     "type"
-  ],
-  type: {
-    _id: "5af1ffd8d4bedc1378325f99",
-    actions: [],
-    name: "camera",
-    type: "sensor",
-    properties: {
-      base64: {
-        type: "string",
-        required: true
-      },
-      name: {
-        type: "string"
-      }
-    },
-    createdAt: "2018-05-08T19:51:52.415Z",
-    updatedAt: "2018-05-10T12:40:26.064Z",
-    __v: 0
-  }
+  ]
 }
 
 const mock_feathers = {
@@ -55,7 +37,7 @@ const mock_feathers = {
             __v: 0
           }
           created_logs.push(created);
-          return Promise.resolve(created); 
+          return Promise.resolve(created);
           default:
             throw new errors.BadRequest('There is no ' + name + ' service.');
         }
@@ -76,7 +58,7 @@ const mock_feathers = {
         const posOfLogToRemove = created_logs.findIndex((log, index) => log._id === id);
         return Promise.resolve(created_logs.splice(posOfLogToRemove, 1)[0]);
       }
-    } 
+    }
   }
 }
 
@@ -118,7 +100,7 @@ describe('Device Unit Test', () => {
     done();
   });
 
-  it('should return the cloud device\'s type', done => {
+  /*it('should return the cloud device\'s type', done => {
     expect(device.getType()).to.equal(mock_cloud_device.type.type);
     done();
   });
@@ -126,7 +108,7 @@ describe('Device Unit Test', () => {
   it('should return the cloud device\'s type properties', done => {
     expect(device.getProperties()).to.equal(mock_cloud_device.type.properties);
     done();
-  });
+  }); */
 
   it('should add a new log to the cloud device', done => {
     device.addLog({

@@ -12,7 +12,7 @@ backendlink.authenticate('test@test.com','test')
   console.log(`Got ${devices.length} Device from the server`)
 
   devices.forEach(device => {
-    console.log(`  + ${device.getAlias()} is a ${device.getType()}`)
+    console.log(`  + ${device.getAlias()} is a ${device.getModel()}`)
   })
 
 })
