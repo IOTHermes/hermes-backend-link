@@ -19,48 +19,7 @@ const mock_cloud_log = {
 
 let logs = [mock_cloud_log];
 
-const mock_feathers = {
-  /*service: (name) => {
-    return {
-      create: (data) => {
-        switch(name){
-          case 'device-logs':
-          const created = {
-            _id: "5af9c1a602db4e1917409bf2",
-            deviceId: data.deviceId,
-            log: {
-                name: data.log.name,
-                base64: data.log.base64
-            },
-            createdAt: "2018-05-14T17:04:38.065Z",
-            updatedAt: "2018-05-14T17:04:38.065Z",
-            __v: 0
-          }
-          created_logs.push(created);
-          return Promise.resolve(created); 
-          default:
-            throw new errors.BadRequest('There is no ' + name + ' service.');
-        }
-      },
-      find: (params) => {
-        switch(name){
-          case 'device-logs':
-            return Promise.resolve({
-              limit: 10,
-              total: created_logs.length,
-              data: created_logs
-            });
-          default:
-            throw new errors.BadRequest('There is no ' + name + ' service.');
-        }
-      },
-      remove: (id) => {
-        const posOfLogToRemove = created_logs.findIndex((log, index) => log._id === id);
-        return Promise.resolve(created_logs.splice(posOfLogToRemove, 1)[0]);
-      }
-    } 
-  }*/
-}
+const mock_feathers = {}
 
 describe('Log Unit Test', () => {
   const log = new Log(mock_feathers, mock_cloud_log);
