@@ -8,55 +8,63 @@ const assert = chai.assert;
 let created_logs = []
 
 const mock_cloud_device = {
-  _id: "5af20c454494a020724802ff",
-  alias: "NoIR camera",
-  typeId: "5af1ffd8d4bedc1378325f99",
-  createdAt: "2018-05-08T20:44:53.019Z",
-  updatedAt: "2018-05-08T20:44:53.019Z",
-  __v: 0,
-  _include: [
-    "type"
-  ]
+  "_id": "mock_cloud_device_id",
+  "alias": "my NoIR 1",
+  "modelId": "mock_cloud_device_model_id",
+  "createdAt": "2018-06-12T17:29:38.650Z",
+  "updatedAt": "2018-06-12T17:29:38.650Z",
+  "__v": 0,
+  "_include": [
+    "model"
+  ],
+  "model": {
+    "_id": "mock_cloud_device_model_id",
+    "types": [
+      "mock_cloud_device_model_type_id"
+    ],
+    "actions": [],
+    "name": "NoIR Camera",
+    "createdAt": "2018-06-12T17:27:22.650Z",
+    "updatedAt": "2018-06-12T17:27:22.650Z",
+    "__v": 0,
+    "properties": {
+      "infraredImage": {
+        "base64": {
+          "type": "string",
+          "required": true
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }
 
 const mock_feathers = {
   service: (name) => {
     return {
       create: (data) => {
-        switch(name){
-          case 'device-logs':
-          const created = {
-            _id: "5af9c1a602db4e1917409bf2",
-            deviceId: data.deviceId,
-            log: {
-              name: data.log.name,
-              base64: data.log.base64
-            },
-            createdAt: "2018-05-14T17:04:38.065Z",
-            updatedAt: "2018-05-14T17:04:38.065Z",
-            __v: 0
-          }
-          created_logs.push(created);
-          return Promise.resolve(created);
-          default:
-            throw new errors.BadRequest('There is no ' + name + ' service.');
+        const created = {
+          _id: "5af9c1a602db4e1917409bf2",
+          deviceId: data.deviceId,
+          log: {
+            name: data.log.name,
+            base64: data.log.base64
+          },
+          createdAt: "2018-05-14T17:04:38.065Z",
+          updatedAt: "2018-05-14T17:04:38.065Z",
+          __v: 0
         }
+        created_logs.push(created);
+        return Promise.resolve(created);
       },
       find: (params) => {
-        switch(name){
-          case 'device-logs':
-            return Promise.resolve({
-              limit: 10,
-              total: created_logs.length,
-              data: created_logs
-            });
-          default:
-            throw new errors.BadRequest('There is no ' + name + ' service.');
-        }
-      },
-      remove: (id) => {
-        const posOfLogToRemove = created_logs.findIndex((log, index) => log._id === id);
-        return Promise.resolve(created_logs.splice(posOfLogToRemove, 1)[0]);
+        return Promise.resolve({
+          limit: 10,
+          total: created_logs.length,
+          data: created_logs
+        });
       }
     }
   }
@@ -100,15 +108,15 @@ describe('Device Unit Test', () => {
     done();
   });
 
-  /*it('should return the cloud device\'s type', done => {
-    expect(device.getType()).to.equal(mock_cloud_device.type.type);
+  it('should return the cloud device\'s types', done => {
+    expect(device.getTypes()).to.equal(mock_cloud_device.model.types);
     done();
   });
 
   it('should return the cloud device\'s type properties', done => {
-    expect(device.getProperties()).to.equal(mock_cloud_device.type.properties);
+    expect(device.getProperties()).to.equal(mock_cloud_device.model.properties);
     done();
-  }); */
+  });
 
   it('should add a new log to the cloud device', done => {
     device.addLog({
@@ -118,7 +126,7 @@ describe('Device Unit Test', () => {
     .then(created => {
       expect(created).to.not.equal(undefined);
       expect(created._id.toString()).to.equal('5af9c1a602db4e1917409bf2');
-      expect(created.deviceId).to.equal('5af20c454494a020724802ff');
+      expect(created.deviceId).to.equal('mock_cloud_device_id');
       expect(created.log.name).to.equal('test-log-name');
       expect(created.log.base64).to.equal('test-log-base64');
       done();
